@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Trips - Trip App</title>
+</head>
+
+<body>
+
+<div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}" th:text="${userId != null ? 'Home' : 'Login'}"></a></li>
+            <li><a th:href="@{/trips/create}" th:if="${userId != null}">Create Trip</a></li>
+            <li>
+                <a th:href="@{/logout}" th:if="${userId != null}">Logout</a>
+                <a th:href="@{/register}" th:unless="${userId != null}">Register</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div th:if="${userId != null}">
+        <p th:text="'Welcome, ' + ${username}"></p>
+        <p th:text="'User ID: ' + ${userId}"></p>
+    </div>
+
+    <div th:unless="${userId != null}">
+        <p>You are not logged in.</p>
+    </div>
+
+    <h2>Trip</h2>
+
+    <!-- Search Form -->
+    <form method="get" action="/trips/search">
+        <label for="location">Search by Location:</label>
+        <input type="text" id="location" name="location" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h1>Trip List</h1>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Trip ID</th>
+            <th>User ID</th>
+            <th>Location</th>
+            <th>Weather</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Join Trip</th>
+            <th>Check Participants</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="trip : ${trips}">
+            <td th:text="${trip.tripId}"></td>
+            <td th:text="${trip.userId}"></td>
+            <td th:text="${trip.location}"></td>
+            <td th:text="${trip.weather}"></td>
+            <td th:text="${trip.startDate}"></td>
+            <td th:text="${trip.endDate}"></td>
+            <td>
+                <form th:action="@{/express-interest}" method="post">
+                    <input type="hidden" name="tripId" th:value="${trip.tripId}" />
+                    <input type="hidden" name="userId" th:value="${userId}" />
+                    <button type="submit" class="btn btn-primary">Express Interest</button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{'/trips/' + ${trip.tripId} + '/expressed-interests'}" class="btn btn-info">View Expressed Interests</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

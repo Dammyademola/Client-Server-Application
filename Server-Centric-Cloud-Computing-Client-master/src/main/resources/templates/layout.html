@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip App</title>
+</head>
+
+<body>
+<nav>
+    <ul>
+        <li><a th:href="@{/}" th:text="${userId != null ? 'Home' : 'Login'}"></a></li>
+        <li><a th:href="@{/trips/create}" th:if="${userId != null}">Create Trip</a></li>
+        <li>
+            <a th:href="@{/logout}" th:if="${userId != null}">Logout</a>
+            <a th:href="@{/register}" th:unless="${userId != null}">Register</a>
+        </li>
+    </ul>
+</nav>
+
+<div th:if="${userId != null}">
+    <p th:text="'Welcome, ' + ${username}"></p>
+    <p th:text="'User ID: ' + ${userId}"></p>
+</div>
+
+<div th:unless="${userId != null}">
+    <p>You are not logged in.</p>
+</div>
+
+<!-- Content specific to each template goes here -->
+<div th:block th:replace="${template} :: content"></div>
+
+</body>
+</html>

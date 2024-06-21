@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Expressed Interests - Trip App</title>
+</head>
+
+<body>
+
+<div>
+    <nav>
+
+    </nav>
+
+    <h2>Expressed Interests in Trip</h2>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>User ID</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="interest : ${expressedInterests}">
+            <td th:text="${interest.userId}"></td>
+            <!-- Add more details as needed -->
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
